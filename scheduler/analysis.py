@@ -91,7 +91,8 @@ Employee workload by name (number of assigned shifts):
 Conflicts:
 {json.dumps(conflicts, indent=2)}
 
-Please respond in markdown with:
+Please respond using Markdown formatting, but do NOT wrap the response
+inside ```markdown or ``` code fences.
 1. A brief overall assessment (1–2 sentences)
 2. 3–6 key points (coverage, fairness, conflicts, obvious issues)
 3. 2–4 practical recommendations to improve the schedule if needed.
@@ -121,8 +122,6 @@ Please respond in markdown with:
             temperature=0.6,
             top_p=0.95,
         )
-
-        st.write("HF response received:", completion)
         
         if not completion.choices:
             st.info("ℹ️ HF returned no response. Using template analysis.")
@@ -135,6 +134,19 @@ Please respond in markdown with:
         # ChatCompletionOutput -> choices[0].message.content
         llm_text = completion.choices[0].message.content if completion.choices else ""
 
+        llm_text = llm_text.strip()
+
+        if llm_text.startswith("```markdown"):
+            llm_text = llm_text[len("```markdown"):]
+
+        if llm_text.startswith("```"):
+            llm_text = llm_text[3:]
+
+        if llm_text.endswith("```"):
+            llm_text = llm_text[:-3]
+
+        llm_text = llm_text.strip()
+    
         if llm_text and len(llm_text.strip()) > 50:
             return f"**🤖 AI-Generated Analysis (Hugging Face)**\n\n{llm_text}"
 
