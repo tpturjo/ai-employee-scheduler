@@ -34,7 +34,7 @@ def generate_llm_summary(
     shifts: List[Dict[str, Any]],
     conflicts: List[str],
     employee_assignments: Dict,
-    hf_token: str = "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",
+    hf_token: str = None,
 ) -> str:
     """
     Generate natural language summary using Hugging Face **Serverless Inference API**
@@ -44,6 +44,9 @@ def generate_llm_summary(
     to the enhanced template-based summary.
     """
 
+    if hf_token is None:
+        hf_token = st.secrets.get("HF_TOKEN", None)
+        
     # Prepare metrics
     filled = sum(1 for s in shifts if s["Assigned"])
     total = len(shifts)
