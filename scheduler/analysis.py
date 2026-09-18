@@ -115,9 +115,9 @@ Please respond in markdown with:
         ]
 
         completion = client.chat.completions.create(
-            model="deepseek-ai/DeepSeek-R1-0528",
+            model="deepseek-ai/DeepSeek-V3-0324",
             messages=messages,
-            max_tokens=700,
+            max_tokens=400,
             temperature=0.6,
             top_p=0.95,
         )
