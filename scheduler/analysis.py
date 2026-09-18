@@ -101,7 +101,7 @@ Please respond in markdown with:
         # InferenceClient will use HF Inference (serverless) by default.
         # We explicitly choose a model that HF shows in their docs as usable.
         client = InferenceClient(
-            model="deepseek-ai/DeepSeek-R1-0528:fastest",
+            provider = "auto",
             token=hf_token,  # or api_key=hf_token
             timeout=30,
         )
@@ -115,11 +115,18 @@ Please respond in markdown with:
         ]
 
         completion = client.chat_completion(
+            model="deepseek-ai/DeepSeek-R1",
             messages=messages,
-            max_tokens=400,
-            temperature=0.7,
+            max_tokens=700,
+            temperature=0.6,
             top_p=0.95,
         )
+
+        if not completion.choices:
+            st.info("ℹ️ HF returned no response. Using template analysis.")
+            return generate_enhanced_summary(
+                context, employee_assignments, conflicts
+            )
 
         # According to HF docs, this is the structure:
         # ChatCompletionOutput -> choices[0].message.content
