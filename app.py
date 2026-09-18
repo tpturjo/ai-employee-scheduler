@@ -27,7 +27,7 @@ with st.sidebar:
     This tool uses:
     - **spaCy** for NLP
     - **Naive Bayes** for classification
-    - **Mistral-7B** (FREE) for summaries
+    - **DeepSeek-V3** via Hugging Face for AI analysis
     """)
     
     st.markdown("---")
@@ -142,7 +142,16 @@ if st.button("Generate Schedule"):
         st.metric("Fairness Score", f"{fairness_score}/100")
     
     st.markdown("### 🤖 AI-Generated Schedule Analysis")
-    llm_summary = generate_llm_summary(final_shifts, conflict_log, employee_shifts)
+    with st.spinner(
+        "🤖 Generating AI analysis... This may take 15–30 seconds.",
+        show_time=True
+    ):
+        llm_summary = generate_llm_summary(
+            final_shifts,
+            conflict_log,
+            employee_shifts
+        )
+            
     st.markdown(llm_summary)
     
     st.write("**Detailed Employee Assignments:**")
