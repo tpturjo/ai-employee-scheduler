@@ -101,7 +101,7 @@ Please respond in markdown with:
         # InferenceClient will use HF Inference (serverless) by default.
         # We explicitly choose a model that HF shows in their docs as usable.
         client = InferenceClient(
-            model="meta-llama/Meta-Llama-3-8B-Instruct",
+            model="auto",
             token=hf_token,  # or api_key=hf_token
             timeout=15,
         )
@@ -126,7 +126,7 @@ Please respond in markdown with:
         llm_text = completion.choices[0].message.content if completion.choices else ""
 
         if llm_text and len(llm_text.strip()) > 50:
-            return f"**🤖 AI-Generated Analysis (Hugging Face – Meta-Llama-3-8B-Instruct)**\n\n{llm_text}"
+            return f"**🤖 AI-Generated Analysis (Hugging Face)**\n\n{llm_text}"
 
         # If it's suspiciously short / empty, fall back
         st.info("ℹ️ HF LLM returned empty/short content. Using template analysis.")
