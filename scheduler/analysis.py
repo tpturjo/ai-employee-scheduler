@@ -101,9 +101,9 @@ Please respond in markdown with:
         # InferenceClient will use HF Inference (serverless) by default.
         # We explicitly choose a model that HF shows in their docs as usable.
         client = InferenceClient(
-            model="auto",
+            model="deepseek-ai/DeepSeek-R1-0528:fastest",
             token=hf_token,  # or api_key=hf_token
-            timeout=15,
+            timeout=30,
         )
 
         messages = [
